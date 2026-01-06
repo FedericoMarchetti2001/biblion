@@ -1,4 +1,4 @@
-import type { Book, LookupRequest, LookupResponse } from "./types";
+import type { Book, LookupRequest, LookupResponse } from "./schemas";
 
 export const mockBooks: Book[] = [
   {

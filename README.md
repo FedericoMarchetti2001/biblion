@@ -6,7 +6,7 @@ Monorepo scaffold for LexiReader (Expo + Node/TS + shared types).
 
 - apps/mobile: Expo React Native app
 - apps/api: Fastify API (mock-first)
-- packages/shared: shared types + mock fixtures
+- packages/shared: shared types + Zod schemas + mock fixtures
 
 ## Quick start
 
