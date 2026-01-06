@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { BooksScreen } from "../features/library/BooksScreen";
 import { ReaderScreen } from "../features/reader/ReaderScreen";
+import { SettingsScreen } from "../features/settings/SettingsScreen";
 import { Text, View } from "react-native";
 
 export type RootStackParamList = {
@@ -69,9 +70,8 @@ const TabsNavigator = () => (
           <MaterialCommunityIcons name="cog" color={color} size={size} />
         )
       }}
-    >
-      {() => <PlaceholderScreen label="Settings" />}
-    </Tabs.Screen>
+      component={SettingsScreen}
+    />
   </Tabs.Navigator>
 );
 

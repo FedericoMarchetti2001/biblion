@@ -1,15 +1,16 @@
-import { appConfig } from "../../app/config";
 import type { BooksListResponse, LookupRequest, LookupResponse } from "@biblion/shared";
 import { mockBooks, mockLookupResponse } from "@biblion/shared";
+import { getRuntimeConfig } from "./runtimeConfig";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const listBooks = async (): Promise<BooksListResponse> => {
-  if (appConfig.useMocks) {
+  const config = getRuntimeConfig();
+  if (config.useMocks) {
     await delay(250);
     return { items: mockBooks };
   }
-  const response = await fetch(`${appConfig.apiUrl}/books`);
+  const response = await fetch(`${config.apiUrl}/books`);
   if (!response.ok) {
     throw new Error("Failed to load books");
   }
@@ -17,11 +18,12 @@ export const listBooks = async (): Promise<BooksListResponse> => {
 };
 
 export const lookupAi = async (payload: LookupRequest): Promise<LookupResponse> => {
-  if (appConfig.useMocks) {
+  const config = getRuntimeConfig();
+  if (config.useMocks) {
     await delay(400);
     return mockLookupResponse(payload);
   }
-  const response = await fetch(`${appConfig.apiUrl}/ai/lookup`, {
+  const response = await fetch(`${config.apiUrl}/ai/lookup`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload)
