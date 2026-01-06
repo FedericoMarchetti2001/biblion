@@ -1,3 +1,4 @@
+// Summary: App entry point for Expo and gesture handler setup.
 import "react-native-gesture-handler";
 import { registerRootComponent } from "expo";
 

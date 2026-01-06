@@ -18,6 +18,8 @@ Monorepo scaffold for LexiReader (Expo + Node/TS + shared types).
 
 - Copy `apps/api/.env.example` to `apps/api/.env` for API mock config and OpenAI keys.
 - Copy `apps/mobile/.env.example` to `apps/mobile/.env` for Expo public config.
+- See `AUTH.md` for OAuth setup and Supabase configuration.
+- `.env` files are ignored by git to avoid leaking secrets.
 
 ## AI context docs
 

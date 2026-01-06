@@ -1,3 +1,4 @@
+// Summary: App entry wiring global state, theming, and navigation.
 import { useColorScheme } from "react-native";
 import { PaperProvider } from "react-native-paper";
 import { AppNavigator } from "./src/app/AppNavigator";
@@ -7,6 +8,7 @@ import { AppStateProvider, useAppState } from "./src/shared/state/AppState";
 
 enableScreens();
 
+// Summary: App shell wiring theme selection to stored settings.
 const AppShell = () => {
   const colorScheme = useColorScheme();
   const { settings } = useAppState();

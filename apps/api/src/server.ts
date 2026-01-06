@@ -1,12 +1,14 @@
-// Summary: Fastify API server wiring mock endpoints, env-driven entitlements, and the AI provider router.
+// Summary: Fastify API server wiring auth, env-driven entitlements, and the AI provider router.
 import Fastify from "fastify";
 import { mockBooks, LookupRequestSchema } from "@biblion/shared";
 import type { LookupRequest } from "@biblion/shared";
 import { ProviderRouter, MockProvider, OpenAiProvider } from "./ai/index.js";
+import { registerMeRoute } from "./auth/meRoute.js";
 
 const server = Fastify({ logger: true });
 
 server.get("/health", async () => ({ ok: true }));
+registerMeRoute(server);
 
 server.get("/books", async () => ({ items: mockBooks }));
 

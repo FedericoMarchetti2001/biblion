@@ -11,9 +11,12 @@
   "dependencies": {
     "@biblion/shared": "*",
     "@expo/vector-icons": "^14.0.2",
+    "@supabase/supabase-js": "^2.49.1",
     "expo": "~54.0.30",
     "expo-constants": "~18.0.12",
+    "expo-secure-store": "~13.0.2",
     "expo-status-bar": "~3.0.9",
+    "expo-auth-session": "~6.1.0",
     "react": "19.1.0",
     "react-native": "0.81.5",
     "react-native-gesture-handler": "~2.28.0",

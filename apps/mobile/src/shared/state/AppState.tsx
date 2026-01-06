@@ -1,6 +1,9 @@
+// Summary: Global app state for session, entitlements, and settings with runtime config sync.
 import { createContext, useContext, useEffect, useMemo, useReducer } from "react";
+import * as Linking from "expo-linking";
 import { appConfig } from "../../app/config";
 import { setRuntimeConfig } from "../api/runtimeConfig";
+import { supabase } from "../auth/supabaseClient";
 
 export type ThemeMode = "system" | "light" | "dark";
 
@@ -59,6 +62,7 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
+    // Keep API runtime config aligned with in-app mock toggle.
     setRuntimeConfig({
       useMocks: state.settings.useMocks,
       apiUrl: appConfig.apiUrl
@@ -66,6 +70,49 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
   }, [state.settings.useMocks]);
 
   const stateValue = useMemo(() => state, [state]);
+
+  useEffect(() => {
+    // Sync Supabase auth session into app state.
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        dispatch({
+          type: "SET_SESSION",
+          payload: { isAuthenticated: true, userId: session.user.id }
+        });
+      } else {
+        dispatch({ type: "SET_SESSION", payload: { isAuthenticated: false } });
+      }
+    });
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, []);
+
+  useEffect(() => {
+    // Complete OAuth flow by exchanging the auth code from deep links.
+    const handleUrl = async (url: string) => {
+      try {
+        await supabase.auth.exchangeCodeForSession(url);
+      } catch (error) {
+        console.warn("OAuth exchange failed", error);
+      }
+    };
+
+    const subscription = Linking.addEventListener("url", ({ url }) => {
+      void handleUrl(url);
+    });
+
+    Linking.getInitialURL().then((url) => {
+      if (url) {
+        void handleUrl(url);
+      }
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
   return (
     <AppStateContext.Provider value={stateValue}>
