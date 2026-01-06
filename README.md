@@ -14,6 +14,11 @@ Monorepo scaffold for LexiReader (Expo + Node/TS + shared types).
 - Run mobile: `npm run dev:mobile`
 - Run API: `npm run dev:api`
 
+## Environment
+
+- Copy `apps/api/.env.example` to `apps/api/.env` for API mock config and OpenAI keys.
+- Copy `apps/mobile/.env.example` to `apps/mobile/.env` for Expo public config.
+
 ## AI context docs
 
 Living context files live in `docs/ai-context`. Keep them updated whenever related changes are made.
