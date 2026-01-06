@@ -18,6 +18,10 @@ Monorepo scaffold for LexiReader (Expo + Node/TS + shared types).
 
 Living context files live in `docs/ai-context`. Keep them updated whenever related changes are made.
 
+## Code comment policy
+
+When editing code, always update the file summary at the top and keep comments aligned with changes.
+
 ## Mock-first
 
 Mobile defaults to mock data. Set env vars to switch:

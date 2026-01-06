@@ -1,4 +1,5 @@
-import type { IAiProvider, ProviderContext } from "./types";
+// Summary: Routes lookup requests to the best AI provider based on plan and allowlist.
+import type { IAiProvider, ProviderContext } from "./types.js";
 import type { LookupRequest, LookupResponse } from "@biblion/shared";
 
 export class ProviderRouter {
@@ -14,6 +15,7 @@ export class ProviderRouter {
     const providerName = this.selectProvider(ctx);
     const provider = this.providers.get(providerName);
     if (!provider) {
+      // Fallback to default provider if the selected provider is unavailable.
       const fallback = this.providers.get(this.defaultProvider);
       if (!fallback) {
         throw new Error("No AI provider available");
@@ -25,6 +27,7 @@ export class ProviderRouter {
 
   private selectProvider(ctx: ProviderContext): string {
     const allowlist = ctx.providerAllowlist.length ? ctx.providerAllowlist : [this.defaultProvider];
+    // Premium users can prefer the first allowed provider, while free users default to mock.
     if (ctx.plan === "premium") {
       return allowlist[0];
     }

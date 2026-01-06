@@ -1,4 +1,5 @@
-import type { IAiProvider, ProviderContext } from "../types";
+// Summary: Mock provider used for local development and testing.
+import type { IAiProvider, ProviderContext } from "../types.js";
 import type { LookupRequest, LookupResponse } from "@biblion/shared";
 import { mockLookupResponse } from "@biblion/shared";
 
@@ -14,6 +15,7 @@ export class MockProvider implements IAiProvider {
   name = "mock";
 
   async lookup(request: LookupRequest, _ctx: ProviderContext): Promise<LookupResponse> {
+    // Keep behavior deterministic for predictable UI tests.
     return withProviderMeta(mockLookupResponse(request), this.name);
   }
 }
